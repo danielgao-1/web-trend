@@ -2,9 +2,11 @@ import { useState } from "react";
 import { 
   createColumnHelper, 
   getCoreRowModel, 
-  useReactTable 
+  useReactTable,
+  flexRender,
 } from "@tanstack/react-table";
-import demoData from "./MOCK_DATA.json";
+import demoData from "./MOCK_DATA.json"; // Replace Later
+
 
 // Typescript alias - type of the data
 export type User = { // Export keyword shares the User Type with others
@@ -60,14 +62,21 @@ const UserTable = () => {
 
   return (
     <div>
-      <table className="users-table">
+      <table className="users-table"> 
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>{header.column.columnDef.header?.()}</th>
-              ))}
-            </tr>
+                <th key={header.id} className="users-table-cell">
+                  <div>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </div>                        
+            </th>
+          ))}
+          </tr>
           ))}
         </thead>
         <tbody>
