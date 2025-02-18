@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { 
-  createColumnHelper, 
+  createColumnHelper,
+  flexRender,
   getCoreRowModel, 
   useReactTable,
-  flexRender,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import demoData from "./MOCK_DATA.json"; // Replace Later
+import './App.css';
 
 
 // Typescript alias - type of the data
@@ -47,7 +49,11 @@ const columns = [
     header: () => "University",
     cell: (info) => info.getValue(),
   }),
-];
+]; 
+
+
+
+
 
 const UserTable = () => {
   const [users, setUsers] = useState<User[]>(demoData);
@@ -58,10 +64,19 @@ const UserTable = () => {
     columns,
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // client side pagination
+    autoResetPageIndex: false, //turn off page reset? of pageIndex
+    initialState: {
+      pagination: {
+        pageIndex: 0, //custom initial page index 
+        pageSize: 25, //custom default page size
+      },
+    },
   });
 
   return (
-    <div>
+    <div className="overivew">
+      <div className="table">
       <table className="users-table"> 
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -83,12 +98,26 @@ const UserTable = () => {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{cell.renderValue()}</td>
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
+      <div className="buttons">
+        <button
+          className="border rounded"
+          onClick={() => table.firstPage()}
+          disabled={!table.getCanPreviousPage()}>
+            {'<<'}
+
+
+        </button>
+
+      </div>
     </div>
   );
 };
