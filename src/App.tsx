@@ -113,10 +113,32 @@ const UserTable = () => {
           onClick={() => table.firstPage()}
           disabled={!table.getCanPreviousPage()}>
             {'<<'}
-
-
         </button>
-
+        <button
+          className="border rounded"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}>
+            {'<'}
+        </button>
+        <button
+          className="border rounded"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}>
+            {'>'}
+        </button>
+        <button
+          className="border rounded"
+          onClick={() => table.lastPage()}
+          disabled={!table.getCanNextPage()}>
+            {'>>'}
+        </button>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getPageCount().toLocaleString()}
+          </strong>
+        </span>
       </div>
     </div>
   );
