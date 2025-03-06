@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { 
   createColumnHelper,
   flexRender,
@@ -6,61 +6,61 @@ import {
   useReactTable,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import demoData from "./MOCK_DATA.json"; // Replace Later
 import './App.css';
 
 
-// Typescript alias - type of the data
-export type User = { // Export keyword shares the User Type with others
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  gender: string;
-  university: string;
+// typescript alias - type of the data
+export type Subreddit = { 
+  name: string;
+  title: string;
+  subscribers: number;
 };
 
-// Column helper instance
-const columnHelper = createColumnHelper<User>();
+// column helper instance
+const columnHelper = createColumnHelper<Subreddit>();
 
-// Create columns array
+// create columns array
 const columns = [
-  columnHelper.accessor("id", {
-    header: () => "ID",
+  columnHelper.accessor("name", {
+    header: () => "Subreddit",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("first_name", {
-    header: () => "First Name",
+  columnHelper.accessor("title", {
+    header: () => "Title",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("last_name", {
-    header: () => "Last Name",
+  columnHelper.accessor("subscribers", {
+    header: () => "Subscribers",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("email", {
-    header: () => "Email",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("gender", {
-    header: () => "Gender",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("university", {
-    header: () => "University",
-    cell: (info) => info.getValue(),
-  }),
-]; 
-
-
-
+];
 
 
 const UserTable = () => {
-  const [users, setUsers] = useState<User[]>(demoData);
+  const [subreddits, setSubreddits] = useState<Subreddit[]>([]);
+
+  // fetch data from backend API
+  useEffect(() => {
+    const fetchData = async () => { 
+      try {
+        const response = await fetch("http://localhost:3000/api/top-subreddits");
+        if (response.ok) {
+          const data = await response.json();
+          setSubreddits(data);
+        } else {
+          console.error("Error fetching data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
   // Create table instance
   const table = useReactTable({
-    data: users,
+    data: subreddits,
     columns,
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
