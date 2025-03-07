@@ -1,9 +1,10 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { 
+  useReactTable,
   createColumnHelper,
   flexRender,
   getCoreRowModel, 
-  useReactTable,
+  getSortedRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import './App.css';
@@ -58,20 +59,24 @@ const UserTable = () => {
     fetchData();
   }, []); 
 
+  //sort instance 
+  const [sorting, setSorting] = useState([]); 
   // Create table instance
   const table = useReactTable({
     data: subreddits,
     columns,
     debugTable: true,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), // client side pagination
-    autoResetPageIndex: false, //turn off page reset? of pageIndex
     initialState: {
       pagination: {
         pageIndex: 0, //custom initial page index 
         pageSize: 25, //custom default page size
       },
+      sorting, // sorting
     },
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // client side pagination
+    autoResetPageIndex: false, //turn off page reset? of pageIndex
+    onSortingChange: setSorting, 
   });
 
   return (
@@ -139,6 +144,10 @@ const UserTable = () => {
             {table.getPageCount().toLocaleString()}
           </strong>
         </span>
+        <button
+          className="border rounded">
+            {"Sort"}
+        </button>
       </div>
     </div>
   );
