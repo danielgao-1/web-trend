@@ -60,7 +60,7 @@ const UserTable = () => {
   }, []); 
 
   //sort instance 
-  const [sorting, setSorting] = useState([]); 
+  // const [sorting, setSorting] = useState([]); 
   // Create table instance
   const table = useReactTable({
     data: subreddits,
@@ -71,12 +71,12 @@ const UserTable = () => {
         pageIndex: 0, //custom initial page index 
         pageSize: 25, //custom default page size
       },
-      sorting, // sorting
+      // sorting, // sorting
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(), // client side pagination
     autoResetPageIndex: false, //turn off page reset? of pageIndex
-    onSortingChange: setSorting, 
+    // onSortingChange: setSorting, 
   });
 
   return (
