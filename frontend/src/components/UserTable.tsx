@@ -19,6 +19,7 @@ export type Subreddit = {
   name: string;
   title: string;
   subscribers: number;
+  url: string;
 };
 
 // column helper instance
@@ -41,7 +42,7 @@ const columns = [
         style={{ cursor: "pointer", fontWeight: "bold" }}
         > 
         Subscriber 
-        {column.getIsSorted() === "asc" ? "🔼" : column.getIsSorted() === "desc" ? "🔽" : "↕"}
+        {column.getIsSorted() === "asc" ? "🔼" : column.getIsSorted() === "desc" ? "🔽" : null}
       </button>
     ),
     cell: (info) => info.getValue().toLocaleString(),
