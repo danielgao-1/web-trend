@@ -16,10 +16,10 @@ app.get("/api/top-subreddits", async (req, res) => {
     // processing the data into specifics
     const subreddits = response.data.data.children.map((sub) => ({
       name: sub.data.display_name,
-      title: sub.data.title || "No title",
-      description: sub.data.public_description || "No description",
+      title: sub.data.title || "No title", 
+      description: sub.data.public_description || "No description", // not used
       subscribers: sub.data.subscribers || 0,
-      icon: sub.data.icon_img && sub.data.icon_img.trim() !== "" 
+      icon: sub.data.icon_img && sub.data.icon_img.trim() !== "" // not used 
         ? sub.data.icon_img 
         : "https://www.redditinc.com/assets/images/site/reddit-logo.png",
       url: `https://www.reddit.com/r/${sub.data.display_name}`,

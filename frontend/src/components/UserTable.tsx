@@ -47,6 +47,10 @@ const columns = [
     cell: (info) => info.getValue().toLocaleString(),
     enableSorting: true,
   }),
+  columnHelper.accessor("url", {
+    header: () => "url",
+    cell: (info) => info.getValue(),
+  }),
 ];
 
 
