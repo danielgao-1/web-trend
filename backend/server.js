@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log("Connected to MongoDB"))
+.then(() => console.log("Connected to MongoDB"));
 
 // mongodb schema
 const SubredditSchema = new mongoose.Schema({
@@ -27,7 +27,7 @@ const SubredditSchema = new mongoose.Schema({
   {timestamps: true
   });
 
-const SubRedditDB = mongoose.model("Subreddit", SubredditSchema)
+const SubRedditDB = mongoose.model("Subreddit", SubredditSchema);
 
 // route to fetch top 100 subreddits
 app.get("/api/top-subreddits", async (req, res) => {

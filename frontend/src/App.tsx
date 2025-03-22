@@ -7,17 +7,14 @@ function App() {
   return (
     <div className="App">
        <section>
-          <h1>Chart</h1>
+          <h1>Table </h1>
           <UserTable />
           </section>
-          
-
         <section>
-          <h1>Chart</h1>
+          <h1>Charts</h1>
           <BarChart />
         </section>
     </div>
-  );
-}
+  )};
 
 export default App;
