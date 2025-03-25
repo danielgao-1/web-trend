@@ -13,6 +13,7 @@ import {
     SortingState,
 } from "@tanstack/react-table";
 import useSubreddits from "./UseSubreddits";
+import FilterComponent from "./FilterComponent";
 
 // typescript alias - type of the data
 type Subreddit = { 
@@ -52,20 +53,14 @@ const columns = [
 
 
 const UserTable = () => {
-
   const subreddits = useSubreddits();
-
   //sorting state
   const [sorting, setSorting] = useState<SortingState>([]);
 
   // filter state - not finished
-  const [columnFilters, setColumnFilters] = useState([
-    {
-        id: "task",
-        value: "Add?"
-    }
-  ])
-  // const [sorting, setColumnSort]
+  const [filterValue, setFilterValue] = useState(''); // Initialize filterValue state
+  const [columnFilters, setColumnFilters] = useState([{ id: 'name', value: filterValue }]); // Initialize columnFilters state
+
   // Create table instance
   const table = useReactTable({
     data: subreddits,
@@ -80,8 +75,14 @@ const UserTable = () => {
     onSortingChange: setSorting,
     state: {
         sorting,
-    } 
-  })
+        columnFilters: [{ id: 'name', value: filterValue }],
+    },
+    onColumnFiltersChange: (newFilters) => {
+      setColumnFilters(newFilters); // Update columnFilters state
+      const nameFilter = newFilters.find(filter => filter.id === 'name');
+      setFilterValue(nameFilter ? nameFilter.value : ''); // Update filterValue state
+    },
+  });
 
   console.log(table.getState().sorting)
 
@@ -89,6 +90,7 @@ const UserTable = () => {
     <div className="dashboard">
       <div className="table-section">
         <div className="table-container">
+          <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
           <table className="users-table">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
