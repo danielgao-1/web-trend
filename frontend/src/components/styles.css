@@ -2,4 +2,10 @@
     font-family: sans-serif;
     text-align: center;
   }
-  
+
+.filter-container {
+  display: flex;
+  justify-content: flex-start; 
+  width: 20%;
+  margin-bottom: 10px;
+}

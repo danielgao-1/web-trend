@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-table";
 import useSubreddits from "./UseSubreddits";
 import FilterComponent from "./FilterComponent";
+import "./styles.css";
 
 // typescript alias - type of the data
 type Subreddit = { 
