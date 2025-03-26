@@ -62,11 +62,10 @@ const UserTable = () => {
   const subreddits = useSubreddits();
   //sorting state
   const [sorting, setSorting] = useState<SortingState>([]);
-
   // filter state - not finished
   const [filterValue, setFilterValue] = useState(''); // Initialize filterValue state
   const [columnFilters, setColumnFilters] = useState([{ id: 'name', value: filterValue }]); // Initialize columnFilters state
-
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 })
   // Create table instance
   const table = useReactTable({
     data: subreddits,
@@ -75,13 +74,21 @@ const UserTable = () => {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(), // client side pagination
+    onPaginationChange: setPagination,
     getSortedRowModel: getSortedRowModel(),
     autoResetPageIndex: false, // turn off page reset? of pageIndex
     // client-side sorting
     onSortingChange: setSorting,
+
     state: {
-        sorting,
-        columnFilters: [{ id: 'name', value: filterValue }],
+      sorting,
+      columnFilters: [{ id: 'name', value: filterValue }],
+      columnVisibility: {
+        id: true
+       },
+      expanded: true,
+      pagination,
+      
     },
     onColumnFiltersChange: (newFilters) => {
       setColumnFilters(newFilters); // update columnFilters state

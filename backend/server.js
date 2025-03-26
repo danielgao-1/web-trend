@@ -29,6 +29,9 @@ const SubredditSchema = new mongoose.Schema({
 
 const SubRedditDB = mongoose.model("Subreddit", SubredditSchema);
 
+// task
+// 
+
 // route to fetch top 100 subreddits
 app.get("/api/top-subreddits", async (req, res) => {
   try {
@@ -49,6 +52,9 @@ app.get("/api/top-subreddits", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch subreddits" });
   }
 });
+
+
+
 
 // start the express server
 app.listen(PORT, () => console.log(`Server is open: http://localhost:${PORT}`));
