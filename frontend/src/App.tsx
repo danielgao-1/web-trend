@@ -6,14 +6,14 @@ import BarChart from "./components/BarChart";
 function App() {
   return (
     <div className="App">
-       <section>
-          <h1>Table </h1>
-          <UserTable />
-          </section>
-        <section>
-          <h1>Charts</h1>
-          <BarChart />
-        </section>
+      <div className="table">   
+        <h1>Table </h1>
+        <UserTable />
+      </div>
+      <div className="chart">
+        <h1>Charts</h1>
+        <BarChart />
+      </div>  
     </div>
   )};
 

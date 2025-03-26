@@ -31,7 +31,8 @@ const columns = [
   columnHelper.accessor("name", {
     header: () => "Subreddit",
     cell: (info) => info.getValue(),
-    size: 200,
+    enableResizing: false,
+    size: 100,
   }),
   columnHelper.accessor("subscribers", {
     header: ({ column }) => (
@@ -45,11 +46,14 @@ const columns = [
     ),
     cell: (info) => info.getValue().toLocaleString(),
     enableSorting: true,
+    size: 100,
   }),
   columnHelper.accessor("url", {
     header: () => "url",
     cell: (info) => info.getValue(),
+    size: 300000,
   }),
+ 
 ];
 
 
@@ -71,7 +75,7 @@ const UserTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(), // client side pagination
     getSortedRowModel: getSortedRowModel(),
-    autoResetPageIndex: false, //turn off page reset? of pageIndex
+    autoResetPageIndex: false, // turn off page reset? of pageIndex
     // client-side sorting
     onSortingChange: setSorting,
     state: {
@@ -79,9 +83,9 @@ const UserTable = () => {
         columnFilters: [{ id: 'name', value: filterValue }],
     },
     onColumnFiltersChange: (newFilters) => {
-      setColumnFilters(newFilters); // Update columnFilters state
+      setColumnFilters(newFilters); // update columnFilters state
       const nameFilter = newFilters.find(filter => filter.id === 'name');
-      setFilterValue(nameFilter ? nameFilter.value : ''); // Update filterValue state
+      setFilterValue(nameFilter ? nameFilter.value : ''); // update filterValue state
     },
   });
 
@@ -89,78 +93,75 @@ const UserTable = () => {
 
   return (
     <div className="dashboard">
-      <div className="table-section">
-        <div className="table-container">
-          <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
-          <table className="users-table">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id} className="users-table-cell">
-                      <div>
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="buttons">
-          <button
-            className="border rounded"
-            onClick={() => table.firstPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<<'}
-          </button>
-          <button
-            className="border rounded"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<'}
-          </button>
-          <button
-            className="border rounded"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>'}
-          </button>
-          <button
-            className="border rounded"
-            onClick={() => table.lastPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>>'}
-          </button>
-          <span className="flex items-center gap-1">
-            <div>Page</div>
-            <strong>
-              {table.getState().pagination.pageIndex + 1} of{' '}
-              {table.getPageCount().toLocaleString()}
-            </strong>
-          </span>
-        </div>
+        <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
+        <table className="users-table">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} className="users-table-cell">
+                    <div>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      <div className="buttons">
+        <button
+          className="border rounded"
+          onClick={() => table.firstPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<<'}
+        </button>
+        <button
+          className="border rounded"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<'}
+        </button>
+        <button
+          className="border rounded"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>'}
+        </button>
+        <button
+          className="border rounded"
+          onClick={() => table.lastPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>>'}
+        </button>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getPageCount().toLocaleString()}
+          </strong>
+        </span>
       </div>
     </div>
+
   );
 };
 
