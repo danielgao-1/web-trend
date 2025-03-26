@@ -31,8 +31,6 @@ const columns = [
   columnHelper.accessor("name", {
     header: () => "Subreddit",
     cell: (info) => info.getValue(),
-    enableResizing: false,
-    size: 100,
   }),
   columnHelper.accessor("subscribers", {
     header: ({ column }) => (
@@ -46,12 +44,15 @@ const columns = [
     ),
     cell: (info) => info.getValue().toLocaleString(),
     enableSorting: true,
-    size: 100,
   }),
   columnHelper.accessor("url", {
     header: () => "url",
-    cell: (info) => info.getValue(),
-    size: 300000,
+    cell: (info) => (
+      <a href={info.getValue()} target="_blank" rel="noopener noreferrer">
+        Go to page
+      </a> 
+    ),
+ 
   }),
  
 ];

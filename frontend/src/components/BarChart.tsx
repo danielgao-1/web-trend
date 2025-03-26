@@ -17,7 +17,7 @@ const Example: React.FC = () => {
   // .sort((a, b) = b.subscribers - a.subscribers) 
   // .slice(0, 10); 
   return (
-    <div style={{ width: "100%", height: 400 }}>
+    <div style={{ width: "50%", height: 400 }}>
       <h2>Bar Chart</h2> 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart 

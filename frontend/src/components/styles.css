@@ -9,7 +9,7 @@
 }
 
 .users-table {
-  width: 100%;
-  table-layout: auto;
+  width: 500px;
+  table-layout: fixed;
 }
 
