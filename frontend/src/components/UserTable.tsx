@@ -15,6 +15,7 @@ import {
 import useSubreddits from "./UseSubreddits";
 import FilterComponent from "./FilterComponent";
 import "./styles.css";
+import { mkConfig, generateCsv, download } from 'export-to-csv';
 
 // typescript alias - type of the data
 type Subreddit = { 
@@ -49,12 +50,10 @@ const columns = [
     header: () => "url",
     cell: (info) => (
       <a href={info.getValue()} target="_blank" rel="noopener noreferrer">
-        Go to page
+        Explore Subreddit
       </a> 
     ),
- 
   }),
- 
 ];
 
 
@@ -96,12 +95,30 @@ const UserTable = () => {
       setFilterValue(nameFilter ? nameFilter.value : ''); // update filterValue state
     },
   });
+  // export feature 
+  const exportExcel = () => {
+    const csvConfig = mkConfig({
+      fieldSeparator: ',',
+      filename: 'subreddit_data',
+      decimalSeparator: '.',
+      useKeysAsHeaders: true,
+  });
+  const rowData = table.getFilteredRowModel().rows.map((row) => row.original); //set to download current state rather than entire table
+        const csv = generateCsv(csvConfig)(rowData);
+        download(csvConfig)(csv);
+};
+  
 
   console.log(table.getState().sorting)
 
   return (
     <div className="dashboard">
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
+        <button 
+          className="border rounded"
+          onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
+            Export to Csv
+          </button>
         <table className="users-table">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -167,6 +184,7 @@ const UserTable = () => {
             {table.getPageCount().toLocaleString()}
           </strong>
         </span>
+        
       </div>
     </div>
 
