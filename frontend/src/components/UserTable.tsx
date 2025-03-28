@@ -21,6 +21,8 @@ import { mkConfig, generateCsv, download } from 'export-to-csv';
 type Subreddit = { 
   name: string;
   subscribers: number;
+  comments: number;
+  posts: number;
   url: string;
 };
 
@@ -46,14 +48,23 @@ const columns = [
     cell: (info) => info.getValue().toLocaleString(),
     enableSorting: true,
   }),
+  columnHelper.accessor("comments", {
+    header: () => "# of Comments",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("posts", {
+    header: () => "# of Posts",
+    cell: (info) => info.getValue(),
+  }),
   columnHelper.accessor("url", {
     header: () => "url",
     cell: (info) => (
       <a href={info.getValue()} target="_blank" rel="noopener noreferrer">
-        Explore Subreddit
+        Explore
       </a> 
     ),
   }),
+
 ];
 
 
