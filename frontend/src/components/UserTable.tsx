@@ -31,6 +31,10 @@ const columnHelper = createColumnHelper<Subreddit>();
 
 // create columns array
 const columns = [
+  columnHelper.accessor("rank", {
+    header: () => "Rank",
+    cell: (info) => info.row.index + 1,
+  }),
   columnHelper.accessor("name", {
     header: () => "Subreddit",
     cell: (info) => info.getValue(),
@@ -71,7 +75,7 @@ const columns = [
 const UserTable = () => {
   const subreddits = useSubreddits();
   //sorting state
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'subscribers', desc: true }],);
   // filter state - not finished
   const [filterValue, setFilterValue] = useState(''); // Initialize filterValue state
   const [columnFilters, setColumnFilters] = useState([{ id: 'name', value: filterValue }]); // Initialize columnFilters state
@@ -89,7 +93,7 @@ const UserTable = () => {
     autoResetPageIndex: false, // turn off page reset? of pageIndex
     // client-side sorting
     onSortingChange: setSorting,
-
+    
     state: {
       sorting,
       columnFilters: [{ id: 'name', value: filterValue }],
@@ -98,7 +102,7 @@ const UserTable = () => {
        },
       expanded: true,
       pagination,
-      
+    
     },
     onColumnFiltersChange: (newFilters) => {
       setColumnFilters(newFilters); // update columnFilters state
