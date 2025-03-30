@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 
+// typescript alias - type of the data
 type Subreddit = { 
   name: string;
-  title: string;
   subscribers: number;
+  comments: number;
+  posts: number;
   url: string;
 };
 
