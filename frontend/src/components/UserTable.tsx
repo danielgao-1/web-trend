@@ -19,10 +19,12 @@ import { mkConfig, generateCsv, download } from 'export-to-csv';
 
 // typescript alias - type of the data
 type Subreddit = { 
+  rank: number;
   name: string;
   subscribers: number;
   comments: number;
   posts: number;
+  time: number;
   url: string;
 };
 
@@ -33,7 +35,7 @@ const columnHelper = createColumnHelper<Subreddit>();
 const columns = [
   columnHelper.accessor("rank", {
     header: () => "Rank",
-    cell: (info) => info.row.index + 1,
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("name", {
     header: () => "Subreddit",
@@ -42,11 +44,18 @@ const columns = [
   columnHelper.accessor("subscribers", {
     header: ({ column }) => (
       <button
-        onClick={() => column.toggleSorting()}
+        onClick={() => {
+          const currentSorting = column.getIsSorted();
+          if (currentSorting === null || currentSorting === 'desc') {
+            column.toggleSorting(false); 
+          } else {
+            column.toggleSorting(true); 
+          }
+        }}
         style={{ cursor: "pointer", fontWeight: "bold" }}
-        > 
-        Subscriber 
-        {column.getIsSorted() === "asc" ? "🔼" : column.getIsSorted() === "desc" ? "🔽" : null}
+      >
+        Subscriber
+        {column.getIsSorted() === "asc" ? "desc" : null}
       </button>
     ),
     cell: (info) => info.getValue().toLocaleString(),
@@ -74,6 +83,11 @@ const columns = [
 
 const UserTable = () => {
   const subreddits = useSubreddits();
+  // assigns each subreddit a rank based on # of subs
+  const sortedSubreddits = [...subreddits].sort((a, b) => b.subscribers - a.subscribers);
+  sortedSubreddits.forEach((subreddit, index) => {
+    subreddit.rank = index + 1;
+  });
   //sorting state
   const [sorting, setSorting] = useState<SortingState>([{ id: 'subscribers', desc: true }],);
   // filter state - not finished
@@ -82,7 +96,7 @@ const UserTable = () => {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 })
   // Create table instance
   const table = useReactTable({
-    data: subreddits,
+    data: sortedSubreddits,
     columns,
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
