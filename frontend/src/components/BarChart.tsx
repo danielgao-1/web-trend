@@ -14,8 +14,7 @@ import "./styles.css";
 
 const Example: React.FC = () => {
   const subreddits = useSubreddits(); 
-  // .sort((a, b) = b.subscribers - a.subscribers) 
-  // .slice(0, 10); 
+  
   return (
     <div style={{ width: "50%", height: 400 }}>
       <h2>Bar Chart</h2> 

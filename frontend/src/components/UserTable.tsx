@@ -17,13 +17,15 @@ import FilterComponent from "./FilterComponent";
 import "./styles.css";
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 
+
+
 // typescript alias - type of the data
 type Subreddit = { 
   rank: number;
   name: string;
   subscribers: number;
-  comments: number;
-  posts: number;
+  total_comments: number;
+  posts_4hours: number;
   time: number;
   url: string;
 };
@@ -36,6 +38,7 @@ const columns = [
   columnHelper.accessor("rank", {
     header: () => "Rank",
     cell: (info) => info.getValue(),
+
   }),
   columnHelper.accessor("name", {
     header: () => "Subreddit",
@@ -61,12 +64,12 @@ const columns = [
     cell: (info) => info.getValue().toLocaleString(),
     enableSorting: true,
   }),
-  columnHelper.accessor("comments", {
+  columnHelper.accessor("total_comments", {
     header: () => "# of Comments",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("posts", {
-    header: () => "# of Posts",
+  columnHelper.accessor("posts_4hours", {
+    header: () => "Post Volumne",
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("url", {
@@ -91,7 +94,7 @@ const UserTable = () => {
   //sorting state
   const [sorting, setSorting] = useState<SortingState>([{ id: 'subscribers', desc: true }],);
   // filter state - not finished
-  const [filterValue, setFilterValue] = useState(''); // Initialize filterValue state
+  const [filterValue, setFilterValue] = useState(""); // Initialize filterValue state
   const [columnFilters, setColumnFilters] = useState([{ id: 'name', value: filterValue }]); // Initialize columnFilters state
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 })
   // Create table instance
@@ -107,7 +110,11 @@ const UserTable = () => {
     autoResetPageIndex: false, // turn off page reset? of pageIndex
     // client-side sorting
     onSortingChange: setSorting,
-    
+    defaultColumn: {
+      size: 350,
+      minSize: 50,
+      maxSize: 500,
+    },
     state: {
       sorting,
       columnFilters: [{ id: 'name', value: filterValue }],
