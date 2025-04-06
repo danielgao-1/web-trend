@@ -26,6 +26,9 @@ type Subreddit = {
   subscribers: number;
   total_comments: number;
   posts_4hours: number;
+  posts_24hours: number;
+  posts_48hours: number;
+  posts_7days: number;
   time: number;
   url: string;
 };
@@ -65,11 +68,23 @@ const columns = [
     enableSorting: true,
   }),
   columnHelper.accessor("total_comments", {
-    header: () => "# of Comments",
+    header: () => "Comments",
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("posts_4hours", {
-    header: () => "Post Volumne",
+    header: () => "Post Volume (4h)",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("posts_24hours", {
+    header: () => "Post Volume (24h)",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("posts_48hours", {
+    header: () => "Post Volume (48h",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("posts_7days", {
+    header: () => "Post Volume (7 days)",
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("url", {
@@ -96,7 +111,15 @@ const UserTable = () => {
   // filter state - not finished
   const [filterValue, setFilterValue] = useState(""); // Initialize filterValue state
   const [columnFilters, setColumnFilters] = useState([{ id: 'name', value: filterValue }]); // Initialize columnFilters state
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 })
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 });
+
+  const [columnVisibility, setColumnVisibility] = useState({
+    posts_4hours: true, 
+    posts_24hours: false,
+    posts_48hours: false,
+    posts_7days: false,
+  });
+
   // Create table instance
   const table = useReactTable({
     data: sortedSubreddits,
@@ -110,6 +133,7 @@ const UserTable = () => {
     autoResetPageIndex: false, // turn off page reset? of pageIndex
     // client-side sorting
     onSortingChange: setSorting,
+    setColumnVisibility,
     defaultColumn: {
       size: 350,
       minSize: 50,
@@ -118,19 +142,24 @@ const UserTable = () => {
     state: {
       sorting,
       columnFilters: [{ id: 'name', value: filterValue }],
-      columnVisibility: {
-        id: true
-       },
+      columnVisibility,
       expanded: true,
       pagination,
-    
     },
     onColumnFiltersChange: (newFilters) => {
       setColumnFilters(newFilters); // update columnFilters state
       const nameFilter = newFilters.find(filter => filter.id === 'name');
       setFilterValue(nameFilter ? nameFilter.value : ''); // update filterValue state
     },
+    onColumnVisibilityChange: setColumnVisibility,
   });
+
+  const toggleColumnVisibility = (columnId: string) => {
+    setColumnVisibility(prev => ({
+      ...prev,
+      [columnId]: !prev[columnId],
+    }));
+  };
   // export feature 
   const exportExcel = () => {
     const csvConfig = mkConfig({
@@ -142,6 +171,7 @@ const UserTable = () => {
   const rowData = table.getFilteredRowModel().rows.map((row) => row.original); //set to download current state rather than entire table
         const csv = generateCsv(csvConfig)(rowData);
         download(csvConfig)(csv);
+        
 };
   
 
@@ -149,7 +179,24 @@ const UserTable = () => {
 
   return (
     <div className="dashboard">
+      <select 
+        onChange={(e) => {
+        const selected = e.target.value;
+        setColumnVisibility({
+          posts_4hours: selected === "posts_4hours",
+          posts_24hours: selected === "posts_24hours",
+          posts_48hours: selected === "posts_48hours",
+          posts_7days: selected === "posts_7days",
+        });}}
+        >
+        <option value="posts_4hours"> 4 Hours</option>
+        <option value="posts_24hours"> 24 Hours</option>
+        <option value="posts_48hours"> 48 Hours</option>
+        <option value="posts_7days"> 7 Days</option>
+      </select>
+
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
+        
         <button 
           className="border rounded"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
@@ -220,6 +267,7 @@ const UserTable = () => {
             {table.getPageCount().toLocaleString()}
           </strong>
         </span>
+        
         
       </div>
     </div>
