@@ -34,7 +34,7 @@ const SubredditSchema = new mongoose.Schema({
 });
 
 const SubredditDB = mongoose.model("Subreddit", SubredditSchema);
-// route to fetch top 100 subreddits
+// api get 1
 app.get("/api/subreddit_top", async (req, res) => {
   try {
     const response1 = await axios.get(`https://www.reddit.com/subreddits/popular.json?limit=100`); // 100 limit
@@ -42,7 +42,7 @@ app.get("/api/subreddit_top", async (req, res) => {
       name: sub.data.display_name,
       description: sub.data.public_description || "No description", // not used for frontend
       subscribers: sub.data.subscribers || 0,
-      url: "https://www.reddit.com/r/${sub.data.display_name}",
+      url: `https://www.reddit.com/r/${sub.data.display_name}`,
     }));
 
     await sleep(1000); // 1 sec delay
@@ -53,7 +53,7 @@ app.get("/api/subreddit_top", async (req, res) => {
       name: sub.data.display_name,
       description: sub.data.public_description || "No description", // not used for frontend
       subscribers: sub.data.subscribers || 0,
-      url: "https://www.reddit.com/r/${sub.data.display_name}",
+      url: `https://www.reddit.com/r/${sub.data.display_name}`,
     }));
 
     const subreddits = [...subreddits1,...subreddits2] //combine the two subreddits
@@ -80,12 +80,12 @@ const DEF_DELAY = 1000;
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
 }
-
+// api get 2
 app.get("/api/subreddit_stats", async (req, res) => {
   try {
     const storedSubreddits = await SubredditDB.find()
     .sort({subscribers: -1})
-    .limit(50); // Get 5 stored subreddits. Increase limit if needed
+    .limit(25); // Get 5 stored subreddits. Increase limit if needed
     const subredditNames = storedSubreddits.map(sub => sub.name); // 
 
     for (const subreddit of subredditNames) {
