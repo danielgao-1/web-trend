@@ -20,7 +20,7 @@ const Example: React.FC = () => {
       <h2>Bar Chart</h2> 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart 
-          data={subreddits}
+          data={subreddits.slice(0,10)}
           width={500}
           height={300}
           margin={{
