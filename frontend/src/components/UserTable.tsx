@@ -48,24 +48,9 @@ const columns = [
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("subscribers", {
-    header: ({ column }) => (
-      <button
-        onClick={() => {
-          const currentSorting = column.getIsSorted();
-          if (currentSorting === null || currentSorting === 'desc') {
-            column.toggleSorting(false); 
-          } else {
-            column.toggleSorting(true); 
-          }
-        }}
-        style={{ cursor: "pointer", fontWeight: "bold" }}
-      >
-        Subscriber
-        {column.getIsSorted() === "asc" ? "desc" : null}
-      </button>
-    ),
+    header: () => 'Subscribers',
     cell: (info) => info.getValue().toLocaleString(),
-    enableSorting: true,
+  
   }),
   columnHelper.accessor("total_comments", {
     header: () => "Comments",
@@ -203,22 +188,46 @@ const UserTable = () => {
             Export to Csv
           </button>
         <table className="users-table">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="users-table-cell">
-                    <div>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                    </div>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <th key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className={
+                          header.column.getCanSort()
+                            ? 'cursor-pointer select-none'
+                            : ''
+                        }
+                        onClick={header.column.getToggleSortingHandler()}
+                        title={
+                          header.column.getCanSort()
+                            ? header.column.getNextSortingOrder() === 'asc'
+                              ? 'Sort ascending'
+                              : header.column.getNextSortingOrder() === 'desc'
+                                ? 'Sort descending'
+                                : 'Clear sort'
+                            : undefined
+                        }
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: ' 🔼',
+                          desc: ' 🔽',
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
                   </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
+                )
+              })}
+            </tr>
+          ))}
+        </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
