@@ -33,6 +33,8 @@ type Subreddit = {
   url: string;
 };
 
+
+
 // column helper instance
 const columnHelper = createColumnHelper<Subreddit>();
 
@@ -46,6 +48,8 @@ const columns = [
   columnHelper.accessor("name", {
     header: () => "Subreddit",
     cell: (info) => info.getValue(),
+    sortUndefined: 'last',
+    sortDescFirst: false,
   }),
   columnHelper.accessor("subscribers", {
     header: () => 'Subscribers',
@@ -55,22 +59,28 @@ const columns = [
   columnHelper.accessor("total_comments", {
     header: () => "Comments",
     cell: (info) => info.getValue(),
+    sortUndefined: 'last'
+   
   }),
   columnHelper.accessor("posts_4hours", {
     header: () => "Post Volume (4h)",
     cell: (info) => info.getValue(),
+    sortUndefined: 'last'
   }),
   columnHelper.accessor("posts_24hours", {
     header: () => "Post Volume (24h)",
     cell: (info) => info.getValue(),
+    sortUndefined: 'last'
   }),
   columnHelper.accessor("posts_48hours", {
     header: () => "Post Volume (48h",
     cell: (info) => info.getValue(),
+    sortUndefined: 'last'
   }),
   columnHelper.accessor("posts_7days", {
     header: () => "Post Volume (7 days)",
     cell: (info) => info.getValue(),
+    sortUndefined: 'last'
   }),
   columnHelper.accessor("url", {
     header: () => "url",
