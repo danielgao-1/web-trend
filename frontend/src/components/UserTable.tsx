@@ -169,12 +169,13 @@ const UserTable = () => {
         
 };
   
-
   console.log(table.getState().sorting)
 
   return (
-    <div className="dashboard">
-      <select 
+    <div className="table">
+      <div className="filter-container">
+        <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
+        <select 
         onChange={(e) => {
         const selected = e.target.value;
         setColumnVisibility({
@@ -188,15 +189,14 @@ const UserTable = () => {
         <option value="posts_24hours"> 24 Hours</option>
         <option value="posts_48hours"> 48 Hours</option>
         <option value="posts_7days"> 7 Days</option>
-      </select>
-
-        <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
-        
+        </select>
         <button 
           className="border rounded"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
             Export to Csv
           </button>
+        </div>
+      
         <table className="users-table">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (

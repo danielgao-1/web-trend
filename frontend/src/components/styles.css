@@ -1,8 +1,21 @@
 .filter-container {
   display: flex;
   justify-content: flex-start; 
-  width: 25%;
+  width: 100%;
   margin-bottom: 5px;
+  grid-template-areas: 
+  "searchbar, empty, empty, dropdown, export";
+}
+.filter-container > div.searchbar {
+  grid-area: searchbar;
+}
+
+.filter-container > div.empty {
+  grid-area: empty;
+}
+
+.filter-container > div.dropdown {
+  grid-area:
 }
 
 .users-table {
