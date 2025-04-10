@@ -30,7 +30,9 @@ const SubredditSchema = new mongoose.Schema({
   posts_24hours: Number,
   posts_48hours: Number,
   posts_7days: Number,
-  total_comments: Number
+  total_comments: Number,
+  total_upvote_ratio: Number,
+  total_score: Number,
 });
 
 const SubredditDB = mongoose.model("Subreddit", SubredditSchema);
@@ -98,40 +100,50 @@ app.get("/api/subreddit_stats", async (req, res) => {
         const posts = postsResponse.data.data.children.map(post => ({
           created_utc: post.data.created_utc,
           num_comments: post.data.num_comments,
+          score: post.data.score || 0,
+          upvote_ratio: post.data.upvote_ratio || null,
         }));
 
         const now = Math.floor(Date.now() / 1000);
-
-        let count4hours = 0;
-        let count24hours = 0;
-        let count48hours = 0;
-        let count7days = 0;
-        let count_comments = 0;
-
+        let count_post = 0;
+        let posts_4hours = 0;
+        let posts_24hours = 0;
+        let posts_48hours = 0;
+        let posts_7days = 0;
+        let total_upvote_ratio = 0;
+        let total_comments = 0;
+        let total_score = 0;
+        
         posts.forEach(post => {
           const postTime = post.created_utc;
 
-          if (now - postTime <= 14400) count4hours++;
-          if (now - postTime <= 86400) count24hours++;
-          if (now - postTime <= 172800) count48hours++;
-          if (now - postTime <= 604800) count7days++;
-
-          count_comments += post.num_comments;
+          if (now - postTime <= 14400) posts_4hours++;
+          if (now - postTime <= 86400) posts_24hours++;
+          if (now - postTime <= 172800) posts_48hours++;
+          if (now - postTime <= 604800) posts_7days++;
+          count_post += 1;
+          total_comments += post.num_comments;
+          total_score += post.score;
+          total_upvote_ratio += post.upvote_ratio
         });
+
+        total_upvote_ratio /= count_post
 
         await SubredditDB.updateOne(
           { name: subreddit },
           {
             $set: {
-              posts_4hours: count4hours,
-              posts_24hours: count24hours,
-              posts_48hours: count48hours,
-              posts_7days: count7days,
-              total_comments: count_comments
+              posts_4hours: posts_4hours,
+              posts_24hours: posts_24hours,
+              posts_48hours: posts_48hours,
+              posts_7days: posts_7days,
+              total_comments: total_comments,
+              total_score: total_score,
+              total_upvote_ratio: total_upvote_ratio
             }
           }
         );
-        res.jsonx
+        res.json()
       } catch (error) {
         console.error(error.message);
       }
