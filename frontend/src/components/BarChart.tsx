@@ -12,31 +12,33 @@ import {
 import useSubreddits from "./useSubreddits"; // hook for data
 import "./styles.css";
 
-const Example: React.FC = () => {
+const BarChartComponent: React.FC = () => {
   const subreddits = useSubreddits(); 
   
   return (
     <div style={{ width: "50%", height: 400 }}>
-      <h2>Bar Chart</h2> 
+      <h2>Total Number of Subscribers</h2> 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart 
-          data={subreddits.slice(0,10)}
+          data={subreddits.sort((a, b) => b.subscribers - a.subscribers).slice(0,5)}
           width={500}
           height={300}
           margin={{
-            right: 30,
+            right: 0,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <CartesianGrid strokeDasharray="5 5" />
+          <XAxis dataKey="name"/>
+          <YAxis/>
           <Tooltip />
           <Legend />
           <Bar dataKey="subscribers" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
+   
+
     </div>
   );
 };
 
-export default Example;
+export default BarChartComponent;
