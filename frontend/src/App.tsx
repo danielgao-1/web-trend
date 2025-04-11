@@ -1,7 +1,8 @@
 import React from "react";
 import './App.css';
 import UserTable from "./components/UserTable";
-import BarChart from "./components/BarChart";
+import BarChartComponent from "./components/BarChart";
+import LineChartComponent from "./components/LineGraph";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
       </div>
       <div className="chart">
         <h1>Charts</h1>
-        <BarChart />
+        <BarChartComponent />
+        <h1> Line Graph </h1>
+        <LineChartComponent/>
       </div>  
     </div>
   )};
