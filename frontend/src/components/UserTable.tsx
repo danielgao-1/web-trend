@@ -191,13 +191,13 @@ const UserTable = () => {
         <option value="posts_7days"> Past 24 Hours</option>
         </select>
         <button 
-          className="border rounded"
+          className="export-button"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
-            Export to Csv
+            Export
           </button>
         </div>
       
-        <table className="users-table">
+        <table>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -256,7 +256,7 @@ const UserTable = () => {
           onClick={() => table.firstPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          {'<<'}
+          {'|<'}
         </button>
         <button
           className="border rounded"
@@ -277,7 +277,7 @@ const UserTable = () => {
           onClick={() => table.lastPage()}
           disabled={!table.getCanNextPage()}
         >
-          {'>>'}
+          {'>|'}
         </button>
         <span className="flex items-center gap-1">
           <div>Page</div>

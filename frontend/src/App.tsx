@@ -17,6 +17,7 @@ function App() {
         <h1> Line Graph </h1>
         <LineChartComponent/>
       </div>  
+     
     </div>
   )};
 
