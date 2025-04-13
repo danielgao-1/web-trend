@@ -16,7 +16,8 @@ import "./styles.css";
 const LineChartComponent = () => {
   const subreddits = useSubreddits(); 
   return (
-    <ResponsiveContainer width="50%" height="50%">
+    <div style={{ width: "50%", height: 400 }}>
+    <ResponsiveContainer width="100%" height="100%">
       <LineChart
         width={500}
         height={300}
@@ -33,6 +34,7 @@ const LineChartComponent = () => {
       <Line dataKey="total_comments"/>
       </LineChart>
     </ResponsiveContainer>
+    </div>
   )
 };
 

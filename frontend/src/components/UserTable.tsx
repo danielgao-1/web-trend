@@ -63,22 +63,22 @@ const columns = [
    
   }),
   columnHelper.accessor("posts_4hours", {
-    header: () => "Post Volume (4h)",
+    header: () => "Post Volume (1h)",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
   columnHelper.accessor("posts_24hours", {
-    header: () => "Post Volume (24h)",
+    header: () => "Post Volume (2h)",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
   columnHelper.accessor("posts_48hours", {
-    header: () => "Post Volume (48h",
+    header: () => "Post Volume (12h",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
   columnHelper.accessor("posts_7days", {
-    header: () => "Post Volume (7 days)",
+    header: () => "Post Volume (24h)",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
@@ -185,10 +185,10 @@ const UserTable = () => {
           posts_7days: selected === "posts_7days",
         });}}
         >
-        <option value="posts_4hours"> 4 Hours</option>
-        <option value="posts_24hours"> 24 Hours</option>
-        <option value="posts_48hours"> 48 Hours</option>
-        <option value="posts_7days"> 7 Days</option>
+        <option value="posts_4hours"> Past 1 Hours</option>
+        <option value="posts_24hours"> Past 2 Hours</option>
+        <option value="posts_48hours"> Past 12 Hours</option>
+        <option value="posts_7days"> Past 24 Hours</option>
         </select>
         <button 
           className="border rounded"
