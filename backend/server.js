@@ -93,7 +93,7 @@ app.get("/api/subreddit_stats", async (req, res) => {
     const subredditNames = storedSubreddits.map(sub => sub.name); // 
 
     for (const subreddit of subredditNames) {
-      await sleep(1800); // delay
+      await sleep(2000); // delay
 
       try {
         console.log(`Fetching posts for r/${subreddit}...`); // log to show subreddit
@@ -181,13 +181,14 @@ app.get("/api/tofrontend", async (req, res) => {
 
 // run every hour
 cron.schedule("0 * * * *", async () => {
+  console.log("Automation Running")
   try {
     await axios.get("http://localhost:3000/api/subreddit_top");
     await sleep(1000)
     await axios.get("http://localhost:3000/api/subreddit_stats");
    
   } catch (error) {
-    console.error(error.message);
+    console.error("Automation not running",error.message);
   }
 });
 
