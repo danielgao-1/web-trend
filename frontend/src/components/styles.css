@@ -1,25 +1,6 @@
-.filter-container {
-  display: flex;
-  justify-content: flex-start; 
-  width: 100%;
-  margin-bottom: 5px;
-  grid-template-areas: 
-  "searchbar, empty, empty, dropdown, export";
-}
-.filter-container > div.searchbar {
-  grid-area: searchbar;
-}
 
-.filter-container > div.empty {
-  grid-area: empty;
-}
 
-.filter-container > div.dropdown {
-  grid-area:
+.export-button {
+  background-color: #c4e4fc ;
+  border-radius: 25px;
 }
-
-.users-table {
-  width: 500px;
-  table-layout: fixed;
-}
-
