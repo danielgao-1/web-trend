@@ -173,6 +173,7 @@ const UserTable = () => {
 
   return (
     <div className="table">
+       <div className="nothing-container">
       <div className="top-container">
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
         <select 
@@ -195,12 +196,14 @@ const UserTable = () => {
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
             Export
           </button>
-          </div>
-          <div className="nothing-container">
-            
+        </div>
+
+         
           </div>
       <div className="table-container">
+        
         <table>
+          
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -253,6 +256,9 @@ const UserTable = () => {
             ))}
           </tbody>
         </table>
+      
+      </div>
+      <div className="bottom-container">
       <div className="buttons">
         <button
           className="border rounded"
@@ -291,7 +297,7 @@ const UserTable = () => {
         </span>
         
         </div>
-      </div>
+    </div>
     </div>
 
   );
