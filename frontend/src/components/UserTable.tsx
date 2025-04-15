@@ -173,7 +173,7 @@ const UserTable = () => {
 
   return (
     <div className="table">
-      <div className="filter-container">
+      <div className="top-container">
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
         <select 
         onChange={(e) => {
@@ -195,8 +195,11 @@ const UserTable = () => {
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
             Export
           </button>
-        </div>
-      
+          </div>
+          <div className="nothing-container">
+            
+          </div>
+      <div className="table-container">
         <table>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -287,7 +290,7 @@ const UserTable = () => {
           </strong>
         </span>
         
-        
+        </div>
       </div>
     </div>
 

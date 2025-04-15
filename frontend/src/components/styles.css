@@ -1,5 +1,7 @@
-
-
+.filter-component{
+  padding: 10px;
+  background-color: pink;
+}
 .export-button {
   background-color: #c4e4fc ;
   border-radius: 25px;

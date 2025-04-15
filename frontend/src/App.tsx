@@ -7,8 +7,8 @@ import LineChartComponent from "./components/LineGraph";
 function App() {
   return (
     <div className="App">
-      <div className="table">   
-        <h1>Table </h1>
+      <h1>Heading Placement </h1>
+      <div className="table-wrapper">   
         <UserTable />
       </div>
       <div className="chart">
