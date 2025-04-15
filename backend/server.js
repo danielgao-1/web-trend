@@ -93,7 +93,7 @@ app.get("/api/subreddit_stats", async (req, res) => {
     const subredditNames = storedSubreddits.map(sub => sub.name); // 
 
     for (const subreddit of subredditNames) {
-      await sleep(2000); // delay
+      await sleep(2500); // delay
 
       try {
         console.log(`Fetching posts for r/${subreddit}...`); // log to show subreddit
