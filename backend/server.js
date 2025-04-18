@@ -27,10 +27,16 @@ const SubredditSchema = new mongoose.Schema({
   url: String, 
   utc_date: Number,
   // 2nd request
-  posts_4hours: Number,
+  posts_1hours: Number,
+  posts_2hours: Number,
+  posts_12hours: Number,
   posts_24hours: Number,
-  posts_48hours: Number,
-  posts_7days: Number,
+
+  comments_1hours: Number,
+  comments_2hours: Number,
+  comments_12hours: Number,
+  comments_24hours: Number,
+
   total_comments: Number,
   total_upvote_ratio: Number,
   total_score: Number,
@@ -120,37 +126,61 @@ app.get("/api/subreddit_stats", async (req, res) => {
 
         const now = Math.floor(Date.now() / 1000);
         let count_post = 0;
-        let posts_4hours = 0;
+        let posts_1hours = 0;
+        let posts_2hours = 0;
+        let posts_12hours = 0;
         let posts_24hours = 0;
-        let posts_48hours = 0;
-        let posts_7days = 0;
+        let comments_1hours = 0;
+        let comments_2hours = 0;
+        let comments_12hours = 0;
+        let comments_24hours = 0;
         let total_upvote_ratio = 0;
         let total_comments = 0;
         let total_score = 0;
-
+        
         posts.forEach(post => {
           const postTime = post.created_utc;
-
-          if (now - postTime <= 3600) posts_4hours++;
-          if (now - postTime <= 7200) posts_24hours++;
-          if (now - postTime <= 43200) posts_48hours++;
-          if (now - postTime <= 86400) posts_7days++;
-          count_post += 1;
+          const ageInSeconds = now - postTime;
+        
+          if (ageInSeconds <= 3600) {
+            posts_1hours++;
+            comments_1hours += post.num_comments;
+          }
+          if (ageInSeconds <= 7200) {
+            posts_2hours++;
+            comments_2hours += post.num_comments;
+          }
+          if (ageInSeconds <= 43200) {
+            posts_12hours++;
+            comments_12hours += post.num_comments;
+          }
+          if (ageInSeconds <= 86400) {
+            posts_24hours++;
+            comments_24hours += post.num_comments;
+          }
+        
+          count_post++;
           total_comments += post.num_comments;
           total_score += post.score;
-          total_upvote_ratio += post.upvote_ratio
+          total_upvote_ratio += post.upvote_ratio;
         });
-
-        total_upvote_ratio /= count_post
+        
+        total_upvote_ratio /= count_post;
 
         await SubredditDB.updateOne(
           { name: subreddit },
           {
             $set: {
-              posts_4hours: posts_4hours,
+              posts_1hours: posts_1hours,
+              posts_2hours: posts_2hours,
+              posts_12hours: posts_12hours,
               posts_24hours: posts_24hours,
-              posts_48hours: posts_48hours,
-              posts_7days: posts_7days,
+
+              comments_1hours: comments_1hours,
+              comments_2hours: comments_2hours,
+              comments_12hours: comments_12hours,
+              comments_24hours: comments_24hours,
+
               total_comments: total_comments,
               total_score: total_score,
               total_upvote_ratio: total_upvote_ratio
