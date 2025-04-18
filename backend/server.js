@@ -65,7 +65,8 @@ app.get("/api/subreddit_top", async (req, res) => {
       url: `https://www.reddit.com/r/${sub.data.display_name}`,
     }));
 
-    const subreddits = [...subreddits1,...subreddits2] //combine the two subreddits
+    const subreddits = [...subreddits1,...subreddits2] 
+
     // checks for duplicates
     await SubredditDB.bulkWrite( //bulkwrite to overwrite rather than duplicate
       subreddits.map(subreddit => ({
@@ -96,10 +97,10 @@ app.get("/api/subreddit_stats", async (req, res) => {
     .sort({subscribers: -1})
     .skip(0)
     .limit(100); // Get 25 stored subreddits. Increase limit if needed
-    const subredditNames = storedSubreddits.map(sub => sub.name); // 
+    const subRedditNames = storedSubreddits.map(sub => sub.name); // 
 
-    for (const subreddit of subredditNames) {
-      await sleep(2500); // delay
+    for (const subreddit of subRedditNames) {
+      await sleep(3000); // delay
 
       try {
         console.log(`Fetching posts for r/${subreddit}...`); // log to show subreddit
@@ -198,7 +199,6 @@ app.get("/api/subreddit_stats", async (req, res) => {
 }
 );
 
-
 app.get("/api/tofrontend", async (req, res) => {
   try{
     const subreddits = await SubredditDB.find().limit(100);
@@ -214,7 +214,7 @@ cron.schedule("0 * * * *", async () => {
   console.log("Automation Running")
   try {
     await axios.get("http://localhost:3000/api/subreddit_top");
-    await sleep(1000)
+    await sleep(2000)
     await axios.get("http://localhost:3000/api/subreddit_stats");
    
   } catch (error) {
