@@ -1,9 +1,9 @@
-require("dotenv").config()
 const express = require("express"); // express backend
 const axios = require("axios"); // get request
 const cors = require("cors"); // front-end fetch  
 const cron = require("node-cron"); //automate task
 const mongoose = require("mongoose"); // for MongoDB 
+require("dotenv").config();
 
  //initalize
 const app = express();

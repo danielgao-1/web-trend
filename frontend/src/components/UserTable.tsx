@@ -172,10 +172,13 @@ const UserTable = () => {
   console.log(table.getState().sorting)
 
   return (
-    <div className="table">
+    <div className="layout-wrapper">
        <div className="nothing-container">
       <div className="top-container">
+        <div className="search-bar">
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
+        </div>  
+        <div className="search-bar">
         <select 
         onChange={(e) => {
         const selected = e.target.value;
@@ -191,15 +194,15 @@ const UserTable = () => {
         <option value="posts_48hours"> Past 12 Hours</option>
         <option value="posts_7days"> Past 24 Hours</option>
         </select>
+        </div>
         <button 
           className="export-button"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
             Export
           </button>
         </div>
-
-         
-          </div>
+        </div>  
+    
       <div className="table-container">
         
         <table>
@@ -256,9 +259,30 @@ const UserTable = () => {
             ))}
           </tbody>
         </table>
-      
       </div>
       <div className="bottom-container">
+    
+        <span className="dropdown"> Rows per page{' '}
+      <select
+          value={table.getState().pagination.pageSize}
+          onChange={e => {
+            table.setPageSize(Number(e.target.value))
+          }}
+        > 
+          {[15, 25, 50].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+               {pageSize}
+            </option>
+          ))}
+        </select>
+        </span>
+      <span className="dropdown">
+         Page{' '}
+         <strong>
+           {table.getState().pagination.pageIndex + 1} of{' '}
+           {table.getPageCount().toLocaleString()}
+         </strong>
+       </span>
       <div className="buttons">
         <button
           className="border rounded"
@@ -288,17 +312,11 @@ const UserTable = () => {
         >
           {'>|'}
         </button>
-        <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{' '}
-            {table.getPageCount().toLocaleString()}
-          </strong>
-        </span>
         
         </div>
+        </div>
     </div>
-    </div>
+   
 
   );
 };
