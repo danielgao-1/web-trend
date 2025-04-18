@@ -21,7 +21,7 @@ const LineChartComponent = () => {
       <LineChart
         width={500}
         height={300}
-        data={subreddits.sort((a, b) => b.subscribers - a.subscribers).slice(0,5)}
+        data={subreddits}
         margin={{
           right: 30,
         }}
