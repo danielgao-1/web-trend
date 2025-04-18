@@ -137,7 +137,7 @@ const UserTable = () => {
     posts_2hours: false,
     posts_12hours: false,
     posts_24hours: false,
-    comments_1hours: false,
+    comments_1hours: true,
     comments_2hours: false,
     comments_12hours: false,
     comments_24hours: false,
@@ -204,7 +204,7 @@ const UserTable = () => {
        <div className="nothing-container">
       <div className="top-container">
         <div className="search-bar">
-        <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
+        <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue}/>
         </div>  
         <div className="search-bar">
        <select 
