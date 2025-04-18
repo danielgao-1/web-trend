@@ -16,7 +16,7 @@ function App() {
 
       <div className="big-bar">
         <button className="icon-button"><img src={menulogo} alt="Menu logo" width={20} height={20} /></button>
-        <div >
+        <div>
         <span style={{color: '#4484f4'}}>R</span>  
         <span style={{color: '#f04434'}}>e</span>
         <span style={{color: '#ffbc04'}}>d</span>
