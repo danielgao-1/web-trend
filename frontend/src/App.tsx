@@ -10,11 +10,14 @@ import menulogo from './svg_files/menu-144.svg';
 
 
 
+
 function App() {
   return (
     <div className="App">
 
       <div className="big-bar">
+      
+        
         <button className="icon-button"><img src={menulogo} alt="Menu logo" width={20} height={20} /></button>
         <div>
         <span style={{color: '#4484f4'}}>R</span>  
@@ -30,6 +33,7 @@ function App() {
         <button style={{color: '#60646c'}}>Trending Now</button>
         </div>
         <img src={RedditIcon} alt="Reddit logo" width={40} height={40}  style={{ marginLeft: 'auto'}} />
+       
         
 
         
