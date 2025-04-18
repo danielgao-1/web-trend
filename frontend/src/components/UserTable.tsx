@@ -16,6 +16,7 @@ import useSubreddits from "./UseSubreddits";
 import FilterComponent from "./FilterComponent";
 import "./styles.css";
 import { mkConfig, generateCsv, download } from 'export-to-csv';
+import exportIcon from '../svg_files/export-icon.svg';
 
 
 
@@ -25,13 +26,18 @@ type Subreddit = {
   name: string;
   subscribers: number;
   total_comments: number;
-  posts_4hours: number;
+  posts_1hours: number;
+  posts_2hours: number;
+  posts_12hours: number;
   posts_24hours: number;
-  posts_48hours: number;
-  posts_7days: number;
+  comments_1hours: Number;
+  comments_2hours: Number;
+  comments_12hours: Number;
+  comments_24hours: Number;
   time: number;
   url: string;
 };
+
 
 
 
@@ -56,32 +62,49 @@ const columns = [
     cell: (info) => info.getValue().toLocaleString(),
   
   }),
-  columnHelper.accessor("total_comments", {
-    header: () => "Comments",
-    cell: (info) => info.getValue(),
-    sortUndefined: 'last'
-   
-  }),
-  columnHelper.accessor("posts_4hours", {
+
+  columnHelper.accessor("posts_1hours", {
     header: () => "Post Volume (1h)",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
-  columnHelper.accessor("posts_24hours", {
+  columnHelper.accessor("posts_2hours", {
     header: () => "Post Volume (2h)",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
-  columnHelper.accessor("posts_48hours", {
+  columnHelper.accessor("posts_12hours", {
     header: () => "Post Volume (12h",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
-  columnHelper.accessor("posts_7days", {
+  columnHelper.accessor("posts_24hours", {
     header: () => "Post Volume (24h)",
     cell: (info) => info.getValue(),
     sortUndefined: 'last'
   }),
+  columnHelper.accessor("comments_1hours", {
+    header: () => "Comment Volume (1h)",
+    cell: (info) => info.getValue(),
+    sortUndefined: 'last'
+  }),
+  columnHelper.accessor("comments_2hours", {
+    header: () => "Comment Volume (2h)",
+    cell: (info) => info.getValue(),
+    sortUndefined: 'last'
+  }),
+  columnHelper.accessor("comments_12hours", {
+    header: () => "Comment Volume (12h)",
+    cell: (info) => info.getValue(),
+    sortUndefined: 'last'
+  }),
+  columnHelper.accessor("comments_24hours", {
+    header: () => "Comment Volume (24h)",
+    cell: (info) => info.getValue(),
+    sortUndefined: 'last'
+  }),
+  
+
   columnHelper.accessor("url", {
     header: () => "url",
     cell: (info) => (
@@ -109,10 +132,14 @@ const UserTable = () => {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 });
 
   const [columnVisibility, setColumnVisibility] = useState({
-    posts_4hours: true, 
+    posts_1hours: true, 
+    posts_2hours: false,
+    posts_12hours: false,
     posts_24hours: false,
-    posts_48hours: false,
-    posts_7days: false,
+    comments_1hours: false,
+    comments_2hours: false,
+    comments_12hours: false,
+    comments_24hours: false,
   });
 
   // Create table instance
@@ -179,26 +206,33 @@ const UserTable = () => {
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue} />
         </div>  
         <div className="search-bar">
-        <select 
-        onChange={(e) => {
-        const selected = e.target.value;
-        setColumnVisibility({
-          posts_4hours: selected === "posts_4hours",
-          posts_24hours: selected === "posts_24hours",
-          posts_48hours: selected === "posts_48hours",
-          posts_7days: selected === "posts_7days",
-        });}}
-        >
-        <option value="posts_4hours"> Past 1 Hours</option>
-        <option value="posts_24hours"> Past 2 Hours</option>
-        <option value="posts_48hours"> Past 12 Hours</option>
-        <option value="posts_7days"> Past 24 Hours</option>
-        </select>
-        </div>
-        <button 
+       <select 
+  onChange={(e) => {
+    const selected = e.target.value;
+    setColumnVisibility({
+      posts_1hours: selected === "1h",
+      posts_2hours: selected === "2h",
+      posts_12hours: selected === "12h",
+      posts_24hours: selected === "24h",
+      comments_1hours: selected === "1h",
+      comments_2hours: selected === "2h",
+      comments_12hours: selected === "12h",
+      comments_24hours: selected === "24h",
+    });
+  }}
+>
+  <option value="1h">Past 1 Hour</option>
+  <option value="2h">Past 2 Hours</option>
+  <option value="12h">Past 12 Hours</option>
+  <option value="24h">Past 24 Hours</option>
+</select>
+</div>
+        
+        <button  
           className="export-button"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
             Export
+            <img src={exportIcon} alt="Reddit logo" width={40} height={40}  style={{ marginLeft: 'auto'}} />
           </button>
         </div>
         </div>  
