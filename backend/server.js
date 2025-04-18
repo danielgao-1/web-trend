@@ -65,7 +65,7 @@ app.get("/api/subreddit_top", async (req, res) => {
       url: `https://www.reddit.com/r/${sub.data.display_name}`,
     }));
 
-    const subreddits = [...subreddits1,...subreddits2] 
+    const subreddits = [...subreddits1,...subreddits2] //combine the two subreddits
 
     // checks for duplicates
     await SubredditDB.bulkWrite( //bulkwrite to overwrite rather than duplicate
