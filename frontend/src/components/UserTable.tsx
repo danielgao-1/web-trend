@@ -17,6 +17,7 @@ import FilterComponent from "./FilterComponent";
 import "./styles.css";
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import exportIcon from '../svg_files/export-icon.svg';
+import exportIcon2 from '../svg_files/export-icon2.png';
 
 
 
@@ -207,32 +208,33 @@ const UserTable = () => {
         </div>  
         <div className="search-bar">
        <select 
-  onChange={(e) => {
-    const selected = e.target.value;
-    setColumnVisibility({
-      posts_1hours: selected === "1h",
-      posts_2hours: selected === "2h",
-      posts_12hours: selected === "12h",
-      posts_24hours: selected === "24h",
-      comments_1hours: selected === "1h",
-      comments_2hours: selected === "2h",
-      comments_12hours: selected === "12h",
-      comments_24hours: selected === "24h",
-    });
-  }}
->
-  <option value="1h">Past 1 Hour</option>
-  <option value="2h">Past 2 Hours</option>
-  <option value="12h">Past 12 Hours</option>
-  <option value="24h">Past 24 Hours</option>
-</select>
-</div>
+          onChange={(e) => {
+            const selected = e.target.value;
+            setColumnVisibility({
+              posts_1hours: selected === "1h",
+              posts_2hours: selected === "2h",
+              posts_12hours: selected === "12h",
+              posts_24hours: selected === "24h",
+              comments_1hours: selected === "1h",
+              comments_2hours: selected === "2h",
+              comments_12hours: selected === "12h",
+              comments_24hours: selected === "24h",
+            });
+          }}
+        >
+          <option value="1h">Past 1 Hour</option>
+          <option value="2h">Past 2 Hours</option>
+          <option value="12h">Past 12 Hours</option>
+          <option value="24h">Past 24 Hours</option>
+        </select>
+      </div>
         
-        <button  
+        <button   style={{ marginLeft: 'auto'}}
           className="export-button"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
-            Export
-            <img src={exportIcon} alt="Reddit logo" width={40} height={40}  style={{ marginLeft: 'auto'}} />
+            <img src={exportIcon} alt="Export logo" width={15} height={15}/>
+            {" "}Export
+            
           </button>
         </div>
         </div>  
