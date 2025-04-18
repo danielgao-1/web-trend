@@ -20,7 +20,7 @@ const BarChartComponent: React.FC = () => {
       <h2>Total Number of Subscribers</h2> 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart 
-          data={subreddits.sort((a, b) => b.subscribers - a.subscribers).slice(0,5)}
+          data={subreddits.sort((a, b) => b.subscribers - a.subscribers)}
           width={500}
           height={300}
           margin={{
