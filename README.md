@@ -1,1 +1,3 @@
-This web-trend repo is a project for the DS440W capstone and is developed in a solo team. The aim of this project is to provide a simple dashboard to users which displays data scraped from the popular social media website, Reddit. The project is developed using the React frameowrk and node framework. In this project, there are multiple different components and libraries that bring the demo to life. The project can be broken down into two major parts containing the Frontend and Backend. 
+This is the official implementation of my work during the DS 440W Capstone project. The aim of this project is to provide a simple dashboard utilizing data scraped from Reddit. In addition, the CSS styling was aimed to replicate the format from Google Trend. 
+
+The official website is published at: https://web-trend-1.onrender.com/
