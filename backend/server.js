@@ -70,7 +70,7 @@ app.get("/api/subreddit_top", async (req, res) => {
       url: `https://www.reddit.com/r/${sub.data.display_name}`,
     }));
 
-    await sleep(20000)
+
 
     const subreddits = [...subreddits1,...subreddits2] //combine the two subreddits
 
@@ -215,14 +215,20 @@ app.get("/api/tofrontend", async (req, res) => {
 
 // run every hour
 cron.schedule("0 * * * *", async () => {
-  console.log("Automation Running")
+  console.log("Automation Running - subreddit_top");
   try {
     await axios.get("http://localhost:3000/api/subreddit_top");
-    await sleep(20000)
-    await axios.get("http://localhost:3000/api/subreddit_stats");
-   
   } catch (error) {
-    console.error("Automation not running",error.message);
+    console.error("Automation not running", error.message);
+  }
+});
+
+cron.schedule("5 * * * *", async () => {
+  console.log("Automation Running - subreddit_stats");
+  try {
+    await axios.get("http://localhost:3000/api/subreddit_stats");
+  } catch (error) {
+    console.error("Automation not running", error.message);
   }
 });
 
