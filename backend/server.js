@@ -226,6 +226,7 @@ app.get("/api/subreddit_stats", async (req, res) => {
         console.error(error.message);
       }
     }
+    res.json({ message: "Subreddit stats updated" });
   } catch (error) {
     console.error(error.message);
   }
