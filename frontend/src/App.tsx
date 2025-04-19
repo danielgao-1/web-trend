@@ -30,7 +30,12 @@ function App() {
         <button style={{color: '#60646c'}}>Explore</button>
         <button style={{color: '#60646c'}}>Trending Now</button>
         </div>
-        <img src={RedditIcon} alt="Reddit logo" width={40} height={40}  style={{ marginLeft: 'auto'}} />
+        <button 
+        style={{ marginLeft: 'auto', border: 'none' }}
+        onClick={() => window.open("https://www.reddit.com", "_blank")}
+        >
+        <img src={RedditIcon} alt="Reddit logo" width={40} height={40}/>
+        </button>
       </div>
 
       <div className="table-wrapper">   
@@ -38,16 +43,13 @@ function App() {
   </div>
   
   <h1>Dashboard</h1>
-  
   <div className="charts-container">
     <div className="bar-chart">
       <BarChartComponent />
     </div>
-    
     <div className="tree-map"> 
       <TreeMapComponent/>
     </div>
-
     <div className="line-graph">
       <LineChartComponent/>
     </div>
