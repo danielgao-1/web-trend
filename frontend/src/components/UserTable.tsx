@@ -126,7 +126,7 @@ const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([{ id: 'subscribers', desc: true }],);
   // filter state - not finished
   const [filterValue, setFilterValue] = useState(""); // Initialize filterValue state
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // Initialize columnFilters state
+  const [, setColumnFilters] = useState<ColumnFiltersState>([]); // Initialize columnFilters state
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 });
 
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
@@ -237,7 +237,7 @@ const UserTable = () => {
         
         <button style={{ marginLeft: 'auto'}}
           className="export-button"
-          onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
+          onClick={exportExcel} >
             <img src={exportIcon} alt="Export logo" width={15} height={15}/>
             {" "}Export
             
