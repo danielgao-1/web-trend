@@ -36,7 +36,7 @@ const TreeMapComponent: React.FC = () => {
 
   return (
     <div style={{ width: '100%', height: '450px' }}>
-      <h2>Subscriber Treemap</h2>
+      <h2>Subscribers Treemap</h2>
       <ResponsiveContainer>
         <Treemap
           data={subreddits}

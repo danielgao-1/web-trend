@@ -18,7 +18,7 @@ const LineChartComponent = () => {
   return (
    
     <div style={{ width: '100%', height: '500px' }}>
-       <h2>Total Comments Per 100 Post</h2>
+       <h2>Total Comments Per Subreddit</h2>
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
         data={subreddits}
