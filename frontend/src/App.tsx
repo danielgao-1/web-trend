@@ -3,6 +3,7 @@ import './App.css';
 import UserTable from "./components/UserTable";
 import BarChartComponent from "./components/BarChart";
 import LineChartComponent from "./components/LineGraph";
+import TreeMapComponent from "./components/TreeMap";
 import RedditIcon from './svg_files/reddit-4.svg';
 import menulogo from './svg_files/menu-144.svg';
 
@@ -14,10 +15,7 @@ import menulogo from './svg_files/menu-144.svg';
 function App() {
   return (
     <div className="App">
-
       <div className="big-bar">
-      
-        
         <button className="icon-button"><img src={menulogo} alt="Menu logo" width={20} height={20} /></button>
         <div>
         <span style={{color: '#4484f4'}}>R</span>  
@@ -33,22 +31,28 @@ function App() {
         <button style={{color: '#60646c'}}>Trending Now</button>
         </div>
         <img src={RedditIcon} alt="Reddit logo" width={40} height={40}  style={{ marginLeft: 'auto'}} />
-       
-        
+      </div>
 
-        
-      </div>
       <div className="table-wrapper">   
-        <UserTable />
-      </div>
-      <div className="chart">
-        <h1>Charts</h1>
-        <BarChartComponent />
-        <h1> Line Graph </h1>
-        <LineChartComponent/>
-      </div>  
-     
+    <UserTable />
+  </div>
+  
+  <h1>Dashboard</h1>
+  
+  <div className="charts-container">
+    <div className="bar-chart">
+      <BarChartComponent />
     </div>
+    
+    <div className="tree-map"> 
+      <TreeMapComponent/>
+    </div>
+
+    <div className="line-graph">
+      <LineChartComponent/>
+    </div>
+  </div>
+</div>
   )};
 
 export default App;
