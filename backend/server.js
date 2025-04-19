@@ -11,6 +11,11 @@ const PORT = 3000; // port = 3000, # does not matter
 app.use(cors());
 app.use(express.json());
 
+const DEF_DELAY = 1000;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
+}
+
 // mongoose connect
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -65,6 +70,8 @@ app.get("/api/subreddit_top", async (req, res) => {
       url: `https://www.reddit.com/r/${sub.data.display_name}`,
     }));
 
+    await sleep(20000)
+
     const subreddits = [...subreddits1,...subreddits2] //combine the two subreddits
 
     // checks for duplicates
@@ -86,10 +93,7 @@ app.get("/api/subreddit_top", async (req, res) => {
   }
 })
 
-const DEF_DELAY = 1000;
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
-}
+
 // api get 2
 app.get("/api/subreddit_stats", async (req, res) => {
   try {
@@ -214,7 +218,7 @@ cron.schedule("0 * * * *", async () => {
   console.log("Automation Running")
   try {
     await axios.get("http://localhost:3000/api/subreddit_top");
-    await sleep(2000)
+    await sleep(20000)
     await axios.get("http://localhost:3000/api/subreddit_stats");
    
   } catch (error) {
