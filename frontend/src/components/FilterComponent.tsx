@@ -1,16 +1,24 @@
+import React from "react";
 import "./styles.css";
 
-const FilterComponent = ({ filterValue, setFilterValue }) => {
-    return (
-      <input
-        type="text"
-        className="filter-container"
-        value={filterValue}
-        onChange={(e) => setFilterValue(e.target.value)}
-        placeholder="Filter by Subreddit"
-      />
-    );
-  };
+interface FilterProps {
+  filterValue: string;
+  setFilterValue: (value: string) => void;
+}
 
-  export default FilterComponent;
-  
+const FilterComponent: React.FC<FilterProps> = ({ 
+  filterValue, 
+  setFilterValue 
+}) => {
+  return (
+    <input
+      type="text"
+      className="filter-container"
+      value={filterValue}
+      onChange={(e) => setFilterValue(e.target.value)}
+      placeholder="Filter by Subreddit"
+    />
+  );
+};
+
+export default FilterComponent;

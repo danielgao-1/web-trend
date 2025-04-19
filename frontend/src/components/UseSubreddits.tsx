@@ -6,7 +6,14 @@ type Subreddit = {
   name: string;
   subscribers: number;
   total_comments: number;
-  posts_4hours: number;
+  posts_1hours: number;
+  posts_2hours: number;
+  posts_12hours: number;
+  posts_24hours: number;
+  comments_1hours: number;
+  comments_2hours: number;
+  comments_12hours: number;
+  comments_24hours: number;
   time: number;
   url: string;
 };

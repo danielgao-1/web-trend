@@ -1,24 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { 
-    Column,
-    ColumnFiltersState,
-    RowData,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    createColumnHelper,
-    useReactTable,
-    SortingState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  createColumnHelper,
+  useReactTable,
+  SortingState,
+  VisibilityState,
+  ColumnFiltersState,
 } from "@tanstack/react-table";
 import useSubreddits from "./UseSubreddits";
 import FilterComponent from "./FilterComponent";
 import "./styles.css";
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import exportIcon from '../svg_files/export-icon.svg';
-import exportIcon2 from '../svg_files/export-icon2.png';
-import calendarIcon from '../svg_files/calendar-icon.png';
+
 
 
 // typescript alias - type of the data
@@ -31,16 +29,13 @@ type Subreddit = {
   posts_2hours: number;
   posts_12hours: number;
   posts_24hours: number;
-  comments_1hours: Number;
-  comments_2hours: Number;
-  comments_12hours: Number;
-  comments_24hours: Number;
+  comments_1hours: number;
+  comments_2hours: number;
+  comments_12hours: number;
+  comments_24hours: number;
   time: number;
   url: string;
 };
-
-
-
 
 // column helper instance
 const columnHelper = createColumnHelper<Subreddit>();
@@ -126,14 +121,15 @@ const UserTable = () => {
   sortedSubreddits.forEach((subreddit, index) => {
     subreddit.rank = index + 1;
   });
+
   //sorting state
   const [sorting, setSorting] = useState<SortingState>([{ id: 'subscribers', desc: true }],);
   // filter state - not finished
   const [filterValue, setFilterValue] = useState(""); // Initialize filterValue state
-  const [columnFilters, setColumnFilters] = useState([{ id: 'name', value: filterValue }]); // Initialize columnFilters state
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // Initialize columnFilters state
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 });
 
-  const [columnVisibility, setColumnVisibility] = useState({
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     posts_1hours: true, 
     posts_2hours: false,
     posts_12hours: false,
@@ -157,7 +153,7 @@ const UserTable = () => {
     autoResetPageIndex: false, // turn off page reset? of pageIndex
     // client-side sorting
     onSortingChange: setSorting,
-    setColumnVisibility,
+  
     defaultColumn: {
       size: 350,
       minSize: 50,
@@ -171,19 +167,25 @@ const UserTable = () => {
       pagination,
     },
     onColumnFiltersChange: (newFilters) => {
-      setColumnFilters(newFilters); // update columnFilters state
-      const nameFilter = newFilters.find(filter => filter.id === 'name');
-      setFilterValue(nameFilter ? nameFilter.value : ''); // update filterValue state
+      const filters = typeof newFilters === "function" 
+        ? newFilters(table.getState().columnFilters) 
+        : newFilters;
+      setColumnFilters(filters);
+      const nameFilter = filters.find(filter => filter.id === 'name');
+      setFilterValue(nameFilter ? nameFilter.value as string : '');
     },
+
+    
     onColumnVisibilityChange: setColumnVisibility,
   });
-
+/* commented out cause not used
   const toggleColumnVisibility = (columnId: string) => {
     setColumnVisibility(prev => ({
       ...prev,
       [columnId]: !prev[columnId],
     }));
   };
+  */
   // export feature 
   const exportExcel = () => {
     const csvConfig = mkConfig({

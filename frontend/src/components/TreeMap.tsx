@@ -1,10 +1,22 @@
-import React from 'react';
 import { Treemap, ResponsiveContainer, Tooltip } from 'recharts';
-import useSubreddits from './useSubreddits';
+import useSubreddits from './UseSubreddits';
 import './styles.css';
 
-// Custom Tooltip for Treemap
-const CustomTooltip = ({ active, payload, label }) => {
+
+interface Subreddit {
+  name: string;
+  subscribers: number;
+  [key: string]: any;
+}
+
+interface TooltipProps {
+  active?: boolean;
+  payload?: Array<{ payload: Subreddit }>;
+  label?: string;
+}
+
+// tooltips to show hover menu
+const CustomTooltip: React.FC<TooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const { name, subscribers } = payload[0].payload;
     return (
@@ -19,8 +31,8 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-const TreeMapComponent = () => {
-  const subreddits = useSubreddits();
+const TreeMapComponent: React.FC = () => {
+  const subreddits: Subreddit[] = useSubreddits();
 
   return (
     <div style={{ width: '100%', height: '450px' }}>
