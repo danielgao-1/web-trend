@@ -16,7 +16,7 @@ const useSubreddits = () => {
   useEffect(() => {
     const fetchData = async () => { 
       try {
-        const response = await fetch("http://localhost:3000/api/tofrontend");
+        const response = await fetch("https://web-trend.onrender.com/api/tofrontend");
         if (response.ok) {
           const data = await response.json();
           setSubreddits(data);
