@@ -8,9 +8,12 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
  //initalize
 const app = express();
-const PORT = 3000; // port = 3000, # does not matter
+const PORT = 3000;
 app.use(cors());
 app.use(express.json());
+
+
+
 
 const DEF_DELAY = 1000;
 function sleep(ms) {
@@ -45,11 +48,9 @@ async function run() {
 }
 run().catch(console.dir);
 
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
+mongoose.connect(uri)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // mongodb schema
 const SubredditSchema = new mongoose.Schema({
