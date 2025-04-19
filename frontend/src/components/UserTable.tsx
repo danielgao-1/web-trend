@@ -18,7 +18,7 @@ import "./styles.css";
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import exportIcon from '../svg_files/export-icon.svg';
 import exportIcon2 from '../svg_files/export-icon2.png';
-
+import calendarIcon from '../svg_files/calendar-icon.png';
 
 
 // typescript alias - type of the data
@@ -58,6 +58,7 @@ const columns = [
     sortUndefined: 'last',
     sortDescFirst: false,
   }),
+
   columnHelper.accessor("subscribers", {
     header: () => 'Subscribers',
     cell: (info) => info.getValue().toLocaleString(),
@@ -204,32 +205,35 @@ const UserTable = () => {
        <div className="nothing-container">
       <div className="top-container">
         <div className="search-bar">
+
         <FilterComponent filterValue={filterValue} setFilterValue={setFilterValue}/>
         </div>  
-        <div className="search-bar">
-       <select 
+        <div className="select-hours">
+          <div>
+          <select
           onChange={(e) => {
-            const selected = e.target.value;
-            setColumnVisibility({
-              posts_1hours: selected === "1h",
-              posts_2hours: selected === "2h",
-              posts_12hours: selected === "12h",
-              posts_24hours: selected === "24h",
-              comments_1hours: selected === "1h",
-              comments_2hours: selected === "2h",
-              comments_12hours: selected === "12h",
-              comments_24hours: selected === "24h",
-            });
-          }}
+          const selected = e.target.value;
+          setColumnVisibility({
+            posts_1hours: selected === "1h",
+            posts_2hours: selected === "2h",
+            posts_12hours: selected === "12h",
+            posts_24hours: selected === "24h",
+            comments_1hours: selected === "1h",
+            comments_2hours: selected === "2h",
+            comments_12hours: selected === "12h",
+            comments_24hours: selected === "24h",
+      });
+    }}  
         >
           <option value="1h">Past 1 Hour</option>
           <option value="2h">Past 2 Hours</option>
           <option value="12h">Past 12 Hours</option>
           <option value="24h">Past 24 Hours</option>
         </select>
+        </div>
       </div>
         
-        <button   style={{ marginLeft: 'auto'}}
+        <button style={{ marginLeft: 'auto'}}
           className="export-button"
           onClick={() => exportExcel(table.getFilteredRowModel().rows)}>
             <img src={exportIcon} alt="Export logo" width={15} height={15}/>
@@ -298,7 +302,8 @@ const UserTable = () => {
       </div>
       <div className="bottom-container">
     
-        <span className="dropdown"> Rows per page{' '}
+      <span> Rows per page{' '}
+      <span className="per-Page">
       <select
           value={table.getState().pagination.pageSize}
           onChange={e => {
@@ -311,6 +316,7 @@ const UserTable = () => {
             </option>
           ))}
         </select>
+        </span>
         </span>
       <span className="dropdown">
          Page{' '}
