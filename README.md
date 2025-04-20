@@ -65,7 +65,7 @@ Start the server.js file
 node server.js
 ```
 
-The program automates the fetch request every hour. To manually fetch, use the following lines:
+The program automates the fetch request every hour. To manually fetch, use the following lines. If the MongdoDB schema is empty, use the first line before the second line.
 ```shell
 http://localhost:3000/api/subreddit_top
 
