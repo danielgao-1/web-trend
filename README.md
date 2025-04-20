@@ -31,7 +31,7 @@ npm run dev
 *Note* You may notice that the frontend is already populated. This is because the project is setup to run with the backend that has been published. To know how to run this locally, setup MongoDB and Backend.
 
 # MongoDB
-Before setting up the backend, setup the MongoDB first. First create an account onf MongoDB Atlas and create a cluster. Once you have the cluster setup, create a .env file and add in the following line:
+Before setting up the backend, setup the MongoDB first. First create an account on MongoDB Atlas and create a cluster. Once you have the cluster setup, create a .env file and add in the following line:
 
 ```shell
 MONGO_URI=mongodb+srv://<username>:<db_password>@cluster0.woaax.mongodb.net/
