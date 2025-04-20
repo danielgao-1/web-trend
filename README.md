@@ -51,7 +51,7 @@ Go into the ./frontend/component/UserSubreddit.tsx and replace
 ```
 with
 ```shell
-const response = await fetch("http://localhost:4000/api/tofrontend");
+const response = await fetch("http://localhost:3000/api/tofrontend");
 ```
 
 # Backend 
