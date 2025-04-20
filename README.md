@@ -70,6 +70,7 @@ The program automates the fetch request every hour. To manually fetch, use the f
 ```shell
 http://localhost:3000/api/subreddit_top
 
-http://localhost:3000/api/subreddit_top"
+http://localhost:3000/api/subreddit_top
+
 ```
 
