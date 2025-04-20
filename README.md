@@ -54,11 +54,15 @@ with
 const response = await fetch("http://localhost:4000/api/tofrontend");
 ```
 
-#Backend 
+# Backend 
 Install the necessary packages to run the backend.
 ```shell
 cd backend/
 npm install
+```
+Start the server.js file
+```shell
+node server.js
 ```
 
 
