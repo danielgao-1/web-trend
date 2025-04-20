@@ -45,7 +45,7 @@ Connected to MongoDB
 Pinged your deployment. You successfully connected to MongoDB!
 ```
 
-Go into the /frontend/component/UserSubreddit.tsx and replace 
+Go into the ./frontend/component/UserSubreddit.tsx and replace 
 ```shell
  const response = await fetch("https://web-trend.onrender.com/api/tofrontend");
 ```
