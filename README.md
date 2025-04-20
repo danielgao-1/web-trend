@@ -65,4 +65,10 @@ Start the server.js file
 node server.js
 ```
 
+The program automates the fetch request every hour. To manually fetch, use the following lines:
+```shell
+http://localhost:3000/api/subreddit_top
+
+http://localhost:3000/api/subreddit_top"
+```
 
