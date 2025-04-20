@@ -36,7 +36,7 @@ Before setting up the backend, setup the MongoDB first. First create an account 
 ```shell
 MONGO_URI=mongodb+srv://<username>:<db_password>@cluster0.woaax.mongodb.net/
 ```
-*Note* Replace <username> and <db_password> with your own.
+*Note* Replace the items in <> such as username and db_password with your own. Additionally remove the <> from the sides.
 
 In the output, you should see the output below:
 ```shell
