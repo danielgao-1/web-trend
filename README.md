@@ -1,5 +1,5 @@
 # Introduction
-This is the official implementation of my work during the DS 440W Capstone project. The aim of this project is to provide a simple dashboard from scratch utilizing data scraped from Reddit. In addition, the CSS styling was aimed to replicate the format from Google Trend. 
+This is the official implementation of my work during the DS 440W Capstone project. The aim of this project is to provide a simple dashboard from scratch, utilizing data scraped from Reddit. In addition, the CSS styling was aimed at replicating the format from Google Trends. 
 
 ![overview.png](figures/table.png)
 ![overview.png](figures/dashboard.png)
@@ -11,14 +11,14 @@ The official website is published at: https://web-trend-1.onrender.com/
 To run the program locally, follow the steps below:
 
 # Frontend
-The frontend was developed using React frameowrk. I used Typescript as the programming language.  Once you have downloaded the github repository use the steps below to step up the frontend of the project.
+The frontend was developed using React framework. I used Typescript as the programming language.  Once you have downloaded the github repository use the steps below to step up the frontend of the project.
 
 Install the necessary packages to run the frontend.
 ```shell
 cd frontend/
 npm install
 ```
-Nex, run an npm audit fix to resolve package issues
+Next, run an npm audit fix to resolve package issues
 ```shell
 npm audix fix
 ```
@@ -28,15 +28,15 @@ Finally, start up the frontend dev server
 npm run dev
 ```
 
-*Note* You may notice that the frontend is already populated. This is because the project is setup to run with the backend that has been published. To know how to run this locally, setup MongoDB and Backend.
+*Note* You may notice that the frontend is already populated. This is because the project is set up to run with the backend that has been published. To know how to run this locally, setup MongoDB and Backend.
 
 # MongoDB
-Before setting up the backend, setup the MongoDB first. First create an account on MongoDB Atlas and create a cluster. Once you have the cluster setup, create a .env file and add in the following line:
+Before setting up the backend, set up the MongoDB first. First, create an account on MongoDB Atlas and create a cluster. Once you have the cluster set up, create a .env file and add in the following line:
 
 ```shell
 MONGO_URI=mongodb+srv://<username>:<db_password>@cluster0.woaax.mongodb.net/
 ```
-*Note* Replace the items in <> such as username and db_password with your own. Additionally remove the <> from the sides.
+*Note* Replace the items in <> such as username and db_password with your own. Additionally, remove the <> from the sides.
 
 In the output, you should see the output below:
 ```shell
